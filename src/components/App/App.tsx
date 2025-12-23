@@ -36,6 +36,7 @@ export default function App() {
           <Pagination
             pageCount={data.totalPages}
             onPageChange={(page) => setPage(page)}
+            currentPage={page}
           />
         )}
 
@@ -53,8 +54,8 @@ export default function App() {
             ariaLabel="magnifying-glass-loading"
             wrapperStyle={{}}
             wrapperClass="magnifying-glass-wrapper"
-            glassColor="#c0efff"
-            color="#e15b64"
+            glassColor="#d9f6ffff"
+            color="#550c72"
           />
         </div>
       )}

@@ -4,11 +4,13 @@ import ReactPaginate from "react-paginate";
 interface PaginationProps {
   pageCount: number;
   onPageChange: (page: number) => void;
+  currentPage: number;
 }
 
 export default function Pagination({
   pageCount,
   onPageChange,
+  currentPage,
 }: PaginationProps) {
   return (
     <ReactPaginate
@@ -16,15 +18,13 @@ export default function Pagination({
       onPageChange={({ selected }) => onPageChange(selected + 1)}
       pageRangeDisplayed={5}
       marginPagesDisplayed={1}
-      //   forcePage={currentPage - 1}
+      forcePage={currentPage - 1}
       containerClassName={css.pagination}
       activeClassName={css.active}
-      disabledClassName={css.disabled}
-      //   previousLabel="←"
-      //   nextLabel="→"
-      previousLabel="<"
+      disabledLinkClassName={css.disabled}
+      previousLabel="←"
+      nextLabel="→"
       breakLabel="..."
-      nextLabel=">"
     />
   );
 }
