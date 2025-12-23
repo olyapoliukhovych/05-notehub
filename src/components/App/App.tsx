@@ -8,6 +8,7 @@ import { useQueryClient, useMutation, useQuery } from "@tanstack/react-query";
 import { deleteNote, fetchNotes } from "../../services/noteService";
 import NoteForm from "../NoteForm/NoteForm";
 import Modal from "../Modal/Modal";
+import { MagnifyingGlass } from "react-loader-spinner";
 
 export default function App() {
   const [page, setPage] = useState(1);
@@ -43,8 +44,21 @@ export default function App() {
         </button>
       </header>
 
-      {isLoading && <p>Loading...</p>}
-      {isError && <p>Error loading notes.</p>}
+      {isLoading && (
+        <div className={css.loader}>
+          <MagnifyingGlass
+            visible={true}
+            height="100"
+            width="100"
+            ariaLabel="magnifying-glass-loading"
+            wrapperStyle={{}}
+            wrapperClass="magnifying-glass-wrapper"
+            glassColor="#c0efff"
+            color="#e15b64"
+          />
+        </div>
+      )}
+      {isError && <p className="error">Error loading notes.</p>}
 
       {data && data.notes.length > 0 && (
         <NoteList
