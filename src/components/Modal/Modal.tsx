@@ -35,17 +35,7 @@ export default function Modal({ children, onClose }: ModalProps) {
       role="dialog"
       aria-modal="true"
     >
-      <div className={css.modal}>
-        {/* <button
-          className={css.closeButton}
-          onClick={onClose}
-          aria-label="Close modal"
-        >
-          Cancel
-        </button> */}
-
-        {children}
-      </div>
+      <div className={css.modal}>{children}</div>
     </div>,
     document.getElementById("modal-root")! as HTMLElement
   );

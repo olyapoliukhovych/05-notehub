@@ -59,13 +59,19 @@ export default function App() {
           />
         </div>
       )}
-      {isError && <p className="error">Error loading notes.</p>}
 
-      {data && data.notes.length > 0 && (
+      {isError && <p className={css.error}>Error loading notes.</p>}
+
+      {data && data.notes.length > 0 ? (
         <NoteList
           notes={data.notes}
           onDelete={(id) => deleteMutation.mutate(id)}
         />
+      ) : (
+        !isLoading &&
+        !isError && (
+          <p className={css.message}>No notes found for your search.</p>
+        )
       )}
 
       {isModalOpen && (

@@ -1,8 +1,6 @@
 import axios from "axios";
 import type { Note } from "../types/note";
 
-// axios.defaults.headers.common.Accept = "application/json";
-
 const noteApi = axios.create({
   baseURL: "https://notehub-public.goit.study/api",
 });
@@ -21,15 +19,6 @@ export interface FetchNotesResponse {
   totalPages: number;
   currentPage: number;
 }
-
-// export const getNotes = async () => {
-//   const res = await axios.get("/notes", {
-//     headers: {},
-//     params: {},
-//     data: {},
-//   });
-//   return res.data;
-// };
 
 export const fetchNotes = async (
   search: string = "",
