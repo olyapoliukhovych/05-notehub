@@ -4,8 +4,8 @@ import Pagination from "../Pagination/Pagination";
 import SearchBox from "../SearchBox/SearchBox";
 import css from "./App.module.css";
 import { useDebounce } from "use-debounce";
-import { useQueryClient, useMutation, useQuery } from "@tanstack/react-query";
-import { deleteNote, fetchNotes } from "../../services/noteService";
+import { useQuery, keepPreviousData } from "@tanstack/react-query";
+import { fetchNotes } from "../../services/noteService";
 import NoteForm from "../NoteForm/NoteForm";
 import Modal from "../Modal/Modal";
 import { MagnifyingGlass } from "react-loader-spinner";
@@ -16,22 +16,21 @@ export default function App() {
   const [debouncedSearch] = useDebounce(search, 500);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const queryClient = useQueryClient();
-
   const { data, isLoading, isError } = useQuery({
     queryKey: ["notes", debouncedSearch, page],
     queryFn: () => fetchNotes(debouncedSearch, page),
+    placeholderData: keepPreviousData,
   });
 
-  const deleteMutation = useMutation({
-    mutationFn: deleteNote,
-    onSuccess: () => queryClient.invalidateQueries({ queryKey: ["notes"] }),
-  });
+  const handleSearchChange = (value: string) => {
+    setSearch(value);
+    setPage(1);
+  };
 
   return (
     <div className={css.app}>
       <header className={css.toolbar}>
-        <SearchBox value={search} onChange={setSearch} />
+        <SearchBox value={search} onChange={handleSearchChange} />
         {data && data.totalPages > 1 && (
           <Pagination
             pageCount={data.totalPages}
@@ -63,10 +62,7 @@ export default function App() {
       {isError && <p className={css.error}>Error loading notes.</p>}
 
       {data && data.notes.length > 0 ? (
-        <NoteList
-          notes={data.notes}
-          onDelete={(id) => deleteMutation.mutate(id)}
-        />
+        <NoteList notes={data.notes} />
       ) : (
         !isLoading &&
         !isError && (

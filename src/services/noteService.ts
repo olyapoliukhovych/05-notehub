@@ -15,9 +15,7 @@ noteApi.interceptors.request.use((config) => {
 
 export interface FetchNotesResponse {
   notes: Note[];
-  totalNotes: number;
   totalPages: number;
-  currentPage: number;
 }
 
 export const fetchNotes = async (
@@ -34,7 +32,7 @@ export const fetchNotes = async (
 };
 
 export const createNote = async (
-  noteContent: Omit<Note, "id">
+  noteContent: Omit<Note, "id" | "createdAt" | "updatedAt">
 ): Promise<Note> => {
   const { data } = await noteApi.post<Note>("/notes", noteContent);
   return data;
