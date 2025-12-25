@@ -17,7 +17,7 @@
   flex-direction: column;
   justify-content: space-between;
   min-height: 180px;
-  transition: transform 250ms ease;
+  transition: transform 250ms ease, box-shadow 250ms ease;
 }
 
 .listItem:hover {
